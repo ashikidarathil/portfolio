@@ -17,7 +17,6 @@ export const personalInfo = {
   subtitles: [
     "MERN Stack Developer",
     "Building Real World Projects",
-    "Node.js & React Learner",
   ],
   bio: `I am a self-taught full stack developer who started learning from scratch. 
   I have built real-world projects like a salon booking platform and an e-commerce website. 
