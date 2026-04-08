@@ -4,20 +4,20 @@ import SectionWrapper from "../ui/SectionWrapper";
 import SectionHeader from "../ui/SectionHeader";
 import { aboutCards, personalInfo } from "../../constants";
 import { fadeIn, staggerContainer } from "../../utils/motion";
-import { 
-  FaGraduationCap, 
-  FaTools, 
-  FaLightbulb, 
+import {
+  FaGraduationCap,
+  FaTools,
+  FaLightbulb,
   FaRocket,
   FaMapMarkerAlt,
-  FaEnvelope
+  FaEnvelope,
 } from "react-icons/fa";
 
 const iconMap = {
   FaGraduationCap,
   FaTools,
   FaLightbulb,
-  FaRocket
+  FaRocket,
 };
 
 const AboutCard = ({ card, index }) => (
@@ -112,7 +112,8 @@ const About = () => {
                   border: "1px solid rgba(245,158,11,0.15)",
                 }}
               >
-                <FaMapMarkerAlt className="text-accent text-xs" /> {personalInfo.location}
+                <FaMapMarkerAlt className="text-accent text-xs" />{" "}
+                {personalInfo.location}
               </div>
               <div
                 className="flex items-center gap-2 text-secondary text-sm px-4 py-2 rounded-xl"
@@ -121,7 +122,8 @@ const About = () => {
                   border: "1px solid rgba(245,158,11,0.15)",
                 }}
               >
-                <FaEnvelope className="text-accent text-xs" /> {personalInfo.email}
+                <FaEnvelope className="text-accent text-xs" />{" "}
+                {personalInfo.email}
               </div>
             </div>
           </motion.div>
@@ -188,9 +190,7 @@ const About = () => {
                   </span>
                   ,
                 </p>
-                <p className="pl-8">
-                  <span className="text-green-400">"Learning MERN stack"</span>,
-                </p>
+
                 <p className="pl-4">],</p>
                 <p className="pl-4">
                   <span className="text-accent">available</span>:{" "}
