@@ -172,8 +172,19 @@ export const projects = [
     gradient: "from-orange-600 to-amber-600",
     emoji: "/jordan_favicon.png",
   },
+  {
+    id: "proj3",
+    title: "OLX Clone",
+    description:
+      "A modern marketplace platform built with React, Firebase, and Tailwind CSS. Features include user authentication, product listings with real-time database integration, category-based filtering, and a fully responsive modern UI.",
+    tags: ["React", "Firebase", "Tailwind CSS"],
+    github: "https://github.com/ashikidarathil/olx_clone",
+    live: "https://olx-clone-nu-six.vercel.app/",
+    gradient: "from-cyan-600 to-blue-600",
+    emoji: "/olx_clone1.png",
+  },
   // {
-  //   id: "proj3",
+  //   id: "proj4",
   //   title: "Frontend Practice Projects",
   //   description:
   //     "Built multiple small projects while learning frontend basics, including responsive layouts and UI components using HTML, CSS, and JavaScript.",
