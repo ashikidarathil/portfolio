@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks, personalInfo } from "../../constants";
+import { HiOutlineDocumentDownload } from "react-icons/hi";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -114,7 +115,10 @@ const Navbar = () => {
                 onMouseEnter={e => e.currentTarget.style.boxShadow = "0 6px 24px rgba(245,158,11,0.45)"}
                 onMouseLeave={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(245,158,11,0.25)"}
               >
-                Resume ↗
+                <div className="flex items-center gap-2">
+                  <span>Resume</span>
+                  <HiOutlineDocumentDownload size={18} className="translate-y-[0.5px]" />
+                </div>
               </a>
             </div>
 
@@ -191,7 +195,10 @@ const Navbar = () => {
                 className="block w-full text-center px-5 py-3 rounded-xl text-white font-semibold"
                 style={{ background: "linear-gradient(135deg, #f59e0b, #f97316)" }}
               >
-                Download Resume ↗
+                <div className="flex items-center justify-center gap-2">
+                  <span>Download Resume</span>
+                  <HiOutlineDocumentDownload size={20} />
+                </div>
               </a>
             </div>
           </motion.div>

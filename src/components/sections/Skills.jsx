@@ -69,16 +69,24 @@ const Skills = () => {
         {/* Category Filters */}
         <motion.div
           variants={staggerContainer(0.05)}
-          className="flex flex-wrap gap-3 mb-10"
+          className="flex flex-nowrap overflow-x-auto gap-3 mb-4 pb-10 pt-2 no-scrollbar scrollbar-hide"
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {skillCategories.map((cat) => (
             <motion.button
               key={cat}
-              variants={fadeIn("up", 0)}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                show: { 
+                  opacity: 1, 
+                  y: 0, 
+                  transition: { type: "spring", damping: 20, stiffness: 100 } 
+                }
+              }}
               onClick={() => setActiveCategory(cat)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex-shrink-0 ${
                 activeCategory === cat
                   ? "text-white"
                   : "text-secondary hover:text-white"
