@@ -128,6 +128,42 @@ const Hero = () => {
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Animation variants for staggered orchestration
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 1, 0.5, 1], // Custom cubic-bezier for smooth cinematic feel
+      },
+    },
+  };
+
+  const badgeVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section
       id="hero"
@@ -137,15 +173,28 @@ const Hero = () => {
       {/* Aurora orbs */}
       <AuroraOrbs />
 
-      {/* Star field background */}
-      <Suspense fallback={null}>
-        <StarFieldCanvas />
-      </Suspense>
+      {/* Star field background - Fade in smoothly */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2, delay: 0.5 }}
+      >
+        <Suspense fallback={null}>
+          <StarFieldCanvas />
+        </Suspense>
+      </motion.div>
 
-      {/* 3D Floating objects */}
-      <Suspense fallback={null}>
-        <HeroCanvas />
-      </Suspense>
+      {/* 3D Floating objects - Fade in gracefully */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 1 }}
+        className="absolute inset-0 z-0"
+      >
+        <Suspense fallback={null}>
+          <HeroCanvas />
+        </Suspense>
+      </motion.div>
 
       {/* Floating particles */}
       <Particles />
@@ -169,18 +218,22 @@ const Hero = () => {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16"
+      >
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
+            variants={badgeVariants}
             className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full mb-8"
             style={{
               background: "rgba(245,158,11,0.08)",
               border: "1px solid rgba(245,158,11,0.25)",
               backdropFilter: "blur(10px)",
+              willChange: "transform, opacity",
             }}
           >
             <span className="relative flex h-2.5 w-2.5">
@@ -194,20 +247,18 @@ const Hero = () => {
 
           {/* Greeting */}
           <motion.p
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            variants={itemVariants}
             className="text-teal font-mono text-base tracking-[0.3em] mb-3 uppercase"
+            style={{ willChange: "transform, opacity" }}
           >
             Hello World, I'm
           </motion.p>
 
           {/* Name */}
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            variants={itemVariants}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.05] mb-4"
+            style={{ willChange: "transform, opacity" }}
           >
             <span className="text-white">{personalInfo.name.split(" ")[0]} </span>
             <span className="gradient-text">{personalInfo.name.split(" ")[1]}</span>
@@ -215,22 +266,26 @@ const Hero = () => {
 
           {/* Animated divider */}
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
+            variants={{
+              hidden: { scaleX: 0 },
+              visible: { 
+                scaleX: 1,
+                transition: { duration: 0.8, ease: "circOut" }
+              }
+            }}
             className="w-24 h-0.5 mb-5 rounded-full"
             style={{
               background: "linear-gradient(90deg, #f59e0b, #f97316, #14b8a6)",
               transformOrigin: "left",
+              willChange: "transform",
             }}
           />
 
           {/* Dynamic title */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            variants={itemVariants}
             className="flex items-center gap-2 mb-6"
+            style={{ willChange: "transform, opacity" }}
           >
             <span className="text-xl sm:text-2xl md:text-3xl text-secondary font-medium">
               {dynamicText}
@@ -240,20 +295,18 @@ const Hero = () => {
 
           {/* Bio */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            variants={itemVariants}
             className="text-secondary text-base sm:text-lg leading-relaxed max-w-xl mb-8 opacity-80"
+            style={{ willChange: "transform, opacity" }}
           >
             {personalInfo.bio}
           </motion.p>
 
           {/* CTA Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            variants={itemVariants}
             className="flex flex-wrap items-center gap-4 mb-10"
+            style={{ willChange: "transform, opacity" }}
           >
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
@@ -285,10 +338,9 @@ const Hero = () => {
 
           {/* Social Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            variants={itemVariants}
             className="flex items-center gap-5 pb-20"
+            style={{ willChange: "transform, opacity" }}
           >
             <span className="text-secondary/40 text-xs font-mono tracking-widest uppercase">Connect</span>
             <div className="w-8 h-px bg-white/10" />
@@ -327,7 +379,7 @@ const Hero = () => {
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Stats bar */}
       <motion.div
