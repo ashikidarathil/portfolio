@@ -1,13 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, JetBrains_Mono } from "next/font/google";
+import { RegisterSW } from "@/components/site/RegisterSW";
 import "./globals.css";
 
 const archivo = Archivo({ subsets: ["latin"], weight: ["400", "500", "600", "900"], variable: "--font-archivo" });
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400"], variable: "--font-mono" });
 
+// Favicons come from the app/favicon.ico, app/icon.svg and app/apple-icon.png files.
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  icons: { icon: "/icon.png" },
+  applicationName: "Ashik",
+  appleWebApp: { capable: true, title: "Ashik", statusBarStyle: "black-translucent" },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
@@ -26,7 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <RegisterSW />
+      </body>
     </html>
   );
 }
