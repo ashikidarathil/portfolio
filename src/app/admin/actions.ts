@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/auth";
 import { dbConnect } from "@/lib/db";
 import { ExperienceModel, MessageModel, PostModel, ProfileModel, ProjectModel, SkillGroupModel } from "@/lib/models";
 import type { FormState } from "@/lib/types";
+import { normalizeTimeZone, timeZoneLabel } from "@/lib/timezone";
 import { lines, pairs, slugify } from "@/lib/utils";
 
 const s = (fd: FormData, k: string) => String(fd.get(k) ?? "").trim();
@@ -40,6 +41,10 @@ async function uniqueSlug(model: typeof ProjectModel, wanted: string, id?: strin
 /* ---------- profile ---------- */
 export async function saveProfile(_p: FormState, fd: FormData): Promise<FormState> {
   await guard();
+  const typedZone = s(fd, "timezone");
+  const timezone = typedZone ? normalizeTimeZone(typedZone) : "Asia/Kolkata";
+  if (!timezone) return { error: `"${typedZone}" isn't a time zone. Pick one from the list, like Asia/Qatar.` };
+  const tzLabel = s(fd, "tzLabel") || timeZoneLabel(timezone);
   try {
     await ProfileModel.findOneAndUpdate(
       {},
@@ -57,8 +62,8 @@ export async function saveProfile(_p: FormState, fd: FormData): Promise<FormStat
         email: s(fd, "email"),
         socials: pairs(fd.get("socials")).map(([name, url]) => ({ name, url })),
         resumeUrl: s(fd, "resumeUrl"),
-        timezone: s(fd, "timezone") || "Asia/Kolkata",
-        tzLabel: s(fd, "tzLabel"),
+        timezone,
+        tzLabel,
       },
       { upsert: true },
     );

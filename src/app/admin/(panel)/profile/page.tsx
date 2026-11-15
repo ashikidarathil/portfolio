@@ -1,4 +1,5 @@
 import { Field } from "@/components/admin/Field";
+import { TimeZoneField } from "@/components/admin/TimeZoneField";
 import { AdminForm, UploadField } from "@/components/admin/ui";
 import { getProfile } from "@/lib/data";
 import { saveProfile } from "../../actions";
@@ -27,8 +28,7 @@ export default async function ProfilePage() {
           hint="One per line: Title | Description"
         />
         <Field name="email" label="Email" type="email" defaultValue={p.email} />
-        <Field name="timezone" label="Time zone" defaultValue={p.timezone} hint="For the clock in the nav, e.g. Asia/Kolkata" />
-        <Field name="tzLabel" label="Time zone label" defaultValue={p.tzLabel} placeholder="IST" />
+        <TimeZoneField defaultZone={p.timezone} defaultLabel={p.tzLabel} />
         <Field
           name="socials"
           label="Social links"
