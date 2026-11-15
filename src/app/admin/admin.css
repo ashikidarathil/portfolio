@@ -15,7 +15,7 @@
 .aside .bottom a { text-decoration: none; }
 
 .work { padding: 28px clamp(16px, 4vw, 48px) 64px; max-width: 1040px; }
-.ahead { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1.5px solid var(--rule); margin-bottom: 24px; }
+.ahead { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1.5px solid var(--rule); margin-bottom: 24px; }
 .ahead h1 { margin: 0; font: 900 clamp(32px, 5vw, 56px)/0.95 var(--f); letter-spacing: -0.05em; text-transform: uppercase; }
 .ahead p { margin: 6px 0 0; color: var(--mute); }
 .abtn { display: inline-flex; align-items: center; gap: 6px; font: 600 14px var(--f); padding: 10px 16px; background: var(--fg); color: var(--bg); border: 0; text-decoration: none; cursor: pointer; }
@@ -81,7 +81,7 @@
 .mail-item.unread .who::after { content: " · new"; color: var(--acc); font-size: 13px; }
 .mail-item .meta { font-size: 13px; color: var(--mute); }
 .mail-item .body { grid-column: 1 / -1; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
-.mail-item .acts { display: flex; gap: 8px; align-items: start; flex-wrap: wrap; justify-content: flex-end; }
+.mail-item .acts { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; justify-content: flex-end; }
 
 /* login */
 .login { min-height: 100vh; display: grid; place-items: center; padding: 24px var(--gutter); }
