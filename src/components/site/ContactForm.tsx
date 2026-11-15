@@ -42,6 +42,20 @@ export function ContactForm() {
 
   const clear = (f: Field) => setErrors((e) => (e[f] ? { ...e, [f]: undefined } : e));
 
+  // While errors are showing, a click or tap anywhere on the page hides them all.
+  // The Send button is the exception: it validates again.
+  const hasErrors = Object.values(errors).some(Boolean);
+  useEffect(() => {
+    if (!hasErrors) return;
+    const onDown = (ev: PointerEvent) => {
+      const t = ev.target as HTMLElement | null;
+      if (t?.closest(".cform button[type=submit]")) return;
+      setErrors({});
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [hasErrors]);
+
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
