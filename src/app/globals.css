@@ -155,6 +155,11 @@ img { max-width: 100%; }
 .field input, .field textarea { font: 500 18px var(--f); background: transparent; border: 0; color: var(--fg); padding: 4px 0; resize: vertical; outline: none; }
 .field:focus-within { border-color: var(--acc); }
 .field:focus-within label { color: var(--acc); }
+.field.invalid { border-color: var(--acc); }
+.field.invalid label { color: var(--acc); }
+.field-err { min-height: 1.4em; font-size: 13px; line-height: 1.4; font-weight: 500; color: var(--acc); }
+.field-err:not(:empty) { animation: fade 0.2s both; }
+.field-err:not(:empty)::before { content: "↳ "; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-foot { grid-column: 1 / -1; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; padding-top: 20px; }
 .form-note { font-size: 14px; color: var(--mute); }
