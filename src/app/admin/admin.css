@@ -14,7 +14,7 @@
 .aside .bottom button.link:hover, .aside .bottom a:hover { color: var(--acc); }
 .aside .bottom a { text-decoration: none; }
 
-.work { padding: 28px clamp(16px, 4vw, 48px) 64px; max-width: 1040px; }
+.work { padding: 28px clamp(16px, 4vw, 48px) 64px; width: 100%; }
 .ahead { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1.5px solid var(--rule); margin-bottom: 24px; }
 .ahead h1 { margin: 0; font: 900 clamp(32px, 5vw, 56px)/0.95 var(--f); letter-spacing: -0.05em; text-transform: uppercase; }
 .ahead p { margin: 6px 0 0; color: var(--mute); }
