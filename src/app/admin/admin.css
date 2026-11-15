@@ -27,6 +27,16 @@
 .abtn.sm { padding: 6px 10px; font-size: 13px; }
 .abtn:disabled { opacity: 0.6; cursor: wait; }
 
+/* mobile top bar + drawer (shown under 860px) */
+.atop { display: none; position: sticky; top: 0; z-index: 50; align-items: center; gap: 14px; padding: 12px clamp(16px, 4vw, 48px); background: var(--bg); border-bottom: 1.5px solid var(--rule); }
+.atop .brand { font: 900 22px var(--f); letter-spacing: -0.03em; text-decoration: none; }
+.atop .brand b { color: var(--acc); }
+.burger { position: relative; width: 40px; height: 40px; display: grid; place-content: center; gap: 5px; background: none; border: 1.5px solid var(--rule); cursor: pointer; padding: 0; }
+.burger span { display: block; width: 18px; height: 2px; background: var(--fg); transition: transform 0.2s, opacity 0.2s; }
+.burger .dot { position: absolute; top: -4px; right: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--acc); }
+.scrim { display: none; }
+@media (prefers-reduced-motion: reduce) { .aside, .scrim { transition: none !important; } }
+
 /* forms */
 .aform { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; }
 .aform .full { grid-column: 1 / -1; }
@@ -91,10 +101,13 @@
 .login h1 b { color: var(--acc); }
 
 @media (max-width: 860px) {
-  .admin { grid-template-columns: 1fr; }
-  .aside { position: static; height: auto; border-right: 0; border-bottom: 1.5px solid var(--rule); gap: 12px; }
-  .aside nav { flex-direction: row; flex-wrap: wrap; }
-  .aside .bottom { flex-direction: row; gap: 16px; }
+  .admin { grid-template-columns: 1fr; align-content: start; }
+  .atop { display: flex; }
+  .aside { position: fixed; z-index: 60; top: 0; left: 0; bottom: 0; height: 100dvh; width: min(280px, 82vw); background: var(--bg); overflow-y: auto; transform: translateX(-100%); transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); visibility: hidden; }
+  .nav-open .aside { transform: none; visibility: visible; box-shadow: 8px 0 0 color-mix(in srgb, var(--fg) 12%, transparent); }
+  .aside nav a { padding: 12px 10px; font-size: 16px; }
+  .scrim { display: block; position: fixed; inset: 0; z-index: 55; background: color-mix(in srgb, #000 50%, transparent); opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .nav-open .scrim { opacity: 1; pointer-events: auto; }
   .aform, .stats { grid-template-columns: 1fr 1fr; }
   .card-actions { margin-top: 12px; justify-content: flex-start; }
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { FlashModal } from "@/components/admin/modal";
-import { ConfirmButton, SideNav } from "@/components/admin/ui";
+import { AdminShell, ConfirmButton, SideNav } from "@/components/admin/ui";
 import { ThemeToggle } from "@/components/site/client";
 import { requireAdmin } from "@/lib/auth";
 import { getCounts } from "@/lib/data";
@@ -13,24 +13,28 @@ export default async function PanelLayout({ children }: { children: React.ReactN
   await requireAdmin();
   const { unread } = await getCounts();
   return (
-    <div className="admin">
-      <aside className="aside">
-        <Link className="brand" href="/admin">Admin<b>.</b></Link>
-        <SideNav unread={unread} />
-        <div className="bottom">
-          <Link href="/" target="_blank">View site ↗</Link>
-          <ThemeToggle className="mode" />
-          <form action={logout}>
-            <ConfirmButton className="link" title="Log out?" message="You'll need your email and password to get back in." confirmLabel="Log out" danger={false}>
-              Log out
-            </ConfirmButton>
-          </form>
-        </div>
-      </aside>
-      <div className="work">{children}</div>
+    <AdminShell
+      unread={unread}
+      sidebar={
+        <>
+          <Link className="brand" href="/admin">Admin<b>.</b></Link>
+          <SideNav unread={unread} />
+          <div className="bottom">
+            <Link href="/" target="_blank">View site ↗</Link>
+            <ThemeToggle className="mode" />
+            <form action={logout}>
+              <ConfirmButton className="link" title="Log out?" message="You'll need your email and password to get back in." confirmLabel="Log out" danger={false}>
+                Log out
+              </ConfirmButton>
+            </form>
+          </div>
+        </>
+      }
+    >
+      {children}
       <Suspense fallback={null}>
         <FlashModal />
       </Suspense>
-    </div>
+    </AdminShell>
   );
 }

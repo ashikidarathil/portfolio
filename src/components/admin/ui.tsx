@@ -177,3 +177,47 @@ export function UploadField({
     </div>
   );
 }
+
+/**
+ * Sidebar shell. On desktop the sidebar is always visible; on phones it becomes a
+ * left drawer opened from the hamburger in the top bar.
+ */
+export function AdminShell({ sidebar, unread, children }: { sidebar: React.ReactNode; unread: number; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const path = usePathname();
+
+  useEffect(() => setOpen(false), [path]); // close after navigating
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  return (
+    <div className={`admin${open ? " nav-open" : ""}`}>
+      <header className="atop">
+        <button
+          type="button"
+          className="burger"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="admin-aside"
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span /><span /><span />
+          {unread > 0 && !open && <i className="dot" aria-hidden="true" />}
+        </button>
+        <Link className="brand" href="/admin">Admin<b>.</b></Link>
+      </header>
+      <aside className="aside" id="admin-aside">{sidebar}</aside>
+      <div className="scrim" aria-hidden="true" onClick={() => setOpen(false)} />
+      <div className="work">{children}</div>
+    </div>
+  );
+}
