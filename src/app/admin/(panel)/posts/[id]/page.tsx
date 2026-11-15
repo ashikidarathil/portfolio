@@ -19,7 +19,7 @@ export default async function EditPost({ params }: { params: Promise<{ id: strin
           {p.published && <Link className="abtn ghost" href={`/blog/${p.slug}`} target="_blank">View live ↗</Link>}
           <form action={deletePost}>
             <input type="hidden" name="id" value={p._id} />
-            <ConfirmButton className="abtn danger" message={`Delete "${p.title}"? This can't be undone.`}>Delete</ConfirmButton>
+            <ConfirmButton className="abtn danger" title="Delete this post?" message={`"${p.title}" will be removed from your blog for good.`}>Delete</ConfirmButton>
           </form>
         </div>
       </header>

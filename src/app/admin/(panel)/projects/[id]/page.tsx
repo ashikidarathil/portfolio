@@ -19,7 +19,7 @@ export default async function EditProject({ params }: { params: Promise<{ id: st
           {p.published && <Link className="abtn ghost" href={`/work/${p.slug}`} target="_blank">View live ↗</Link>}
           <form action={deleteProject}>
             <input type="hidden" name="id" value={p._id} />
-            <ConfirmButton className="abtn danger" message={`Delete "${p.title}"? This can't be undone.`}>Delete</ConfirmButton>
+            <ConfirmButton className="abtn danger" title="Delete this project?" message={`"${p.title}" will be removed from your site for good.`}>Delete</ConfirmButton>
           </form>
         </div>
       </header>

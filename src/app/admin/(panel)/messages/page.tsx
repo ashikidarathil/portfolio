@@ -29,7 +29,7 @@ export default async function Inbox() {
                 </form>
                 <form action={deleteMessage} className="inline">
                   <input type="hidden" name="id" value={m._id} />
-                  <ConfirmButton message={`Delete the message from ${m.name}? This can't be undone.`}>Delete</ConfirmButton>
+                  <ConfirmButton title="Delete this message?" message={`The message from ${m.name} will be removed for good.`}>Delete</ConfirmButton>
                 </form>
               </div>
               <p className="body">{m.message}</p>

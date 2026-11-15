@@ -101,3 +101,20 @@
 @media (max-width: 560px) {
   .aform { grid-template-columns: 1fr; }
 }
+
+/* modals: success / error / confirm */
+.modal { border: 0; padding: 0; background: transparent; color: var(--fg); max-width: min(460px, calc(100vw - 32px)); width: 100%; overflow: visible; }
+.modal::backdrop { background: color-mix(in srgb, #000 55%, transparent); backdrop-filter: blur(2px); animation: modal-fade 0.18s ease-out; }
+.modal[open] .modal-box { animation: modal-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.modal-box { background: var(--bg); border: 1.5px solid var(--rule); padding: 28px; display: flex; flex-direction: column; gap: 12px; box-shadow: 8px 8px 0 color-mix(in srgb, var(--fg) 18%, transparent); }
+.modal-icon { width: 44px; height: 44px; display: grid; place-items: center; font: 900 24px var(--f); color: #fff; background: var(--fg); margin-bottom: 4px; }
+.modal-success .modal-icon { background: #1a8f4e; }
+.modal-error .modal-icon, .modal-danger .modal-icon { background: var(--acc); }
+.modal h2 { margin: 0; font: 900 clamp(26px, 5vw, 34px)/1 var(--f); letter-spacing: -0.04em; text-transform: uppercase; text-wrap: balance; }
+.modal p { margin: 0; color: var(--mute); font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.modal-actions .abtn { min-width: 96px; justify-content: center; }
+.abtn.danger-solid { background: var(--acc); color: var(--on-acc); }
+.abtn.danger-solid:hover { background: var(--fg); color: var(--bg); }
+@keyframes modal-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }

@@ -1,11 +1,16 @@
 "use client";
 
-import { startTransition, useActionState } from "react";
+import { startTransition, useActionState, useEffect } from "react";
+import { useModal } from "@/components/admin/modal";
 import { login } from "../auth-actions";
 import type { FormState } from "@/lib/types";
 
 export default function LoginPage() {
   const [state, action, pending] = useActionState<FormState, FormData>(login, {});
+  const modal = useModal();
+  useEffect(() => {
+    if (state.error) modal.error("Couldn't log in", state.error);
+  }, [state, modal]);
   return (
     <div className="login">
       <form
@@ -25,7 +30,6 @@ export default function LoginPage() {
           <input id="password" name="password" type="password" required autoComplete="current-password" />
         </div>
         <button className="abtn" type="submit" disabled={pending}>{pending ? "Logging in…" : "Log in →"}</button>
-        {state.error && <span className="msg-err" role="alert">{state.error}</span>}
       </form>
     </div>
   );

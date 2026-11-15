@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ModalProvider } from "@/components/admin/modal";
 import "./admin.css";
 
 export const metadata: Metadata = {
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminRoot({ children }: { children: React.ReactNode }) {
-  return children;
+  return <ModalProvider>{children}</ModalProvider>;
 }

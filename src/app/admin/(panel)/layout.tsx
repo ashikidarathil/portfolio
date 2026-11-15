@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { SideNav } from "@/components/admin/ui";
+import { Suspense } from "react";
+import { FlashModal } from "@/components/admin/modal";
+import { ConfirmButton, SideNav } from "@/components/admin/ui";
 import { ThemeToggle } from "@/components/site/client";
 import { requireAdmin } from "@/lib/auth";
 import { getCounts } from "@/lib/data";
@@ -19,11 +21,16 @@ export default async function PanelLayout({ children }: { children: React.ReactN
           <Link href="/" target="_blank">View site ↗</Link>
           <ThemeToggle className="mode" />
           <form action={logout}>
-            <button className="link" type="submit">Log out</button>
+            <ConfirmButton className="link" title="Log out?" message="You'll need your email and password to get back in." confirmLabel="Log out" danger={false}>
+              Log out
+            </ConfirmButton>
           </form>
         </div>
       </aside>
       <div className="work">{children}</div>
+      <Suspense fallback={null}>
+        <FlashModal />
+      </Suspense>
     </div>
   );
 }

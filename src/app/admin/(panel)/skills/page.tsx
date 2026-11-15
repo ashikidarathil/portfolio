@@ -18,7 +18,7 @@ export default async function SkillsAdmin() {
           </AdminForm>
           <form action={deleteSkillGroup} className="card-actions">
             <input type="hidden" name="id" value={g._id} />
-            <ConfirmButton message={`Delete the "${g.name}" group?`}>Delete group</ConfirmButton>
+            <ConfirmButton title="Delete this skill group?" message={`"${g.name}" and its skills will be removed from your home page.`}>Delete group</ConfirmButton>
           </form>
         </div>
       ))}

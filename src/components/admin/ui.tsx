@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import type { FormState } from "@/lib/types";
+import { useModal } from "./modal";
 
 type Action = (prev: FormState, fd: FormData) => Promise<FormState>;
 
@@ -23,13 +24,21 @@ export function AdminForm({
 }) {
   const [state, formAction, pending] = useActionState<FormState, FormData>(action, {});
   const ref = useRef<HTMLFormElement>(null);
+  const modal = useModal();
+  // Every save result opens a modal: green for success, red for errors.
   useEffect(() => {
-    if (resetOnSuccess && state.ok) ref.current?.reset();
-  }, [state, resetOnSuccess]);
+    if (state.ok) {
+      if (resetOnSuccess) ref.current?.reset();
+      modal.success("Saved", state.ok);
+    } else if (state.error) {
+      modal.error("Couldn't save", state.error);
+    }
+  }, [state, resetOnSuccess, modal]);
   return (
     <form
       ref={ref}
       className={className}
+      noValidate
       onSubmit={(e) => {
         // Submit without React's automatic form reset, so a failed save keeps your edits.
         e.preventDefault();
@@ -40,21 +49,35 @@ export function AdminForm({
       {children}
       <div className="afoot">
         <button className="abtn" type="submit" disabled={pending}>{pending ? "Saving…" : submitLabel}</button>
-        {state.ok && !pending && <span className="msg-ok" role="status">{state.ok}</span>}
-        {state.error && !pending && <span className="msg-err" role="alert">{state.error}</span>}
       </div>
     </form>
   );
 }
 
-/** Submit button that asks before a destructive action. */
-export function ConfirmButton({ message, children, className = "abtn danger sm" }: { message: string; children: React.ReactNode; className?: string }) {
+/** Asks in a confirmation modal, then submits its form. */
+export function ConfirmButton({
+  message,
+  title = "Are you sure?",
+  confirmLabel = "Delete",
+  danger = true,
+  children,
+  className = "abtn danger sm",
+}: {
+  message: string;
+  title?: string;
+  confirmLabel?: string;
+  danger?: boolean;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const modal = useModal();
   return (
     <button
-      type="submit"
+      type="button"
       className={className}
-      onClick={(e) => {
-        if (!window.confirm(message)) e.preventDefault();
+      onClick={async (e) => {
+        const form = e.currentTarget.form;
+        if (await modal.confirm({ title, message, confirmLabel, danger })) form?.requestSubmit();
       }}
     >
       {children}
@@ -106,7 +129,7 @@ export function UploadField({
 }) {
   const [value, setValue] = useState(defaultValue);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
+  const modal = useModal();
   const id = `f-${name}`;
   const isImage = accept.startsWith("image");
   const urls = multiple ? value.split("\n").map((s) => s.trim()).filter(Boolean) : value ? [value] : [];
@@ -116,7 +139,6 @@ export function UploadField({
     e.target.value = "";
     if (!files.length) return;
     setBusy(true);
-    setError("");
     for (const file of files) {
       const fd = new FormData();
       fd.append("file", file);
@@ -126,7 +148,7 @@ export function UploadField({
         if (!res.ok) throw new Error(json.error || "Upload failed.");
         setValue((v) => (multiple ? [v.trim(), json.url].filter(Boolean).join("\n") : json.url));
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Upload failed.");
+        modal.error("Upload failed", err instanceof Error ? err.message : "Try again with a smaller file.");
         break;
       }
     }
@@ -144,7 +166,6 @@ export function UploadField({
       <div className="upload">
         <input type="file" accept={accept} multiple={multiple} onChange={onFiles} disabled={busy} aria-label={`Upload ${label}`} />
         {busy && <span className="hint">Uploading…</span>}
-        {error && <span className="msg-err">{error}</span>}
       </div>
       {isImage && urls.length > 0 && (
         <div className="thumbs">

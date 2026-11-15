@@ -105,7 +105,7 @@ export async function saveProject(_p: FormState, fd: FormData): Promise<FormStat
     return fail(e);
   }
   refresh();
-  if (newId) redirect(`/admin/projects/${newId}`);
+  if (newId) redirect(`/admin/projects/${newId}?flash=project-created`);
   return { ok: "Project saved." };
 }
 
@@ -113,7 +113,7 @@ export async function deleteProject(fd: FormData) {
   await guard();
   await ProjectModel.findByIdAndDelete(s(fd, "id"));
   refresh();
-  redirect("/admin/projects");
+  redirect("/admin/projects?flash=project-deleted");
 }
 
 /* ---------- posts ---------- */
@@ -143,7 +143,7 @@ export async function savePost(_p: FormState, fd: FormData): Promise<FormState> 
     return fail(e);
   }
   refresh();
-  if (newId) redirect(`/admin/posts/${newId}`);
+  if (newId) redirect(`/admin/posts/${newId}?flash=post-created`);
   return { ok: published ? "Post saved and live." : "Draft saved." };
 }
 
@@ -151,7 +151,7 @@ export async function deletePost(fd: FormData) {
   await guard();
   await PostModel.findByIdAndDelete(s(fd, "id"));
   refresh();
-  redirect("/admin/posts");
+  redirect("/admin/posts?flash=post-deleted");
 }
 
 /* ---------- skills ---------- */
@@ -175,6 +175,7 @@ export async function deleteSkillGroup(fd: FormData) {
   await guard();
   await SkillGroupModel.findByIdAndDelete(s(fd, "id"));
   refresh();
+  redirect("/admin/skills?flash=group-deleted");
 }
 
 /* ---------- experience ---------- */
@@ -198,6 +199,7 @@ export async function deleteExperience(fd: FormData) {
   await guard();
   await ExperienceModel.findByIdAndDelete(s(fd, "id"));
   refresh();
+  redirect("/admin/experience?flash=entry-deleted");
 }
 
 /* ---------- messages ---------- */
@@ -211,4 +213,5 @@ export async function deleteMessage(fd: FormData) {
   await guard();
   await MessageModel.findByIdAndDelete(s(fd, "id"));
   revalidatePath("/admin", "layout");
+  redirect("/admin/messages?flash=message-deleted");
 }

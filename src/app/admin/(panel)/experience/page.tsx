@@ -20,7 +20,7 @@ export default async function ExperienceAdmin() {
           </AdminForm>
           <form action={deleteExperience} className="card-actions">
             <input type="hidden" name="id" value={e._id} />
-            <ConfirmButton message={`Delete "${e.title}"?`}>Delete entry</ConfirmButton>
+            <ConfirmButton title="Delete this entry?" message={`"${e.title}" will be removed from your experience list.`}>Delete entry</ConfirmButton>
           </form>
         </div>
       ))}
