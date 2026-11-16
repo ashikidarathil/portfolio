@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Cover } from "@/components/site/Cover";
 import { getProjectBySlug, getProjects } from "@/lib/data";
+import { Arrow } from "@/components/Arrow";
 
 export const revalidate = 3600;
 
@@ -33,7 +34,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <>
       <section className="title-block">
-        <Link className="back" href="/work">← All work</Link>
+        <Link className="back" href="/work"><Arrow dir="left" /> All work</Link>
         <h1 className="case-title">{p.title}</h1>
       </section>
 
@@ -44,8 +45,8 @@ export default async function ProjectPage({ params }: Props) {
         <div>
           <span className="k">Links</span>
           <div className="links">
-            {p.liveUrl && <a className="ul" href={p.liveUrl} target="_blank" rel="noopener">Live site ↗</a>}
-            {p.codeUrl && <a className="ul" href={p.codeUrl} target="_blank" rel="noopener">Source code ↗</a>}
+            {p.liveUrl && <a className="ul" href={p.liveUrl} target="_blank" rel="noopener">Live site <Arrow dir="up-right" /></a>}
+            {p.codeUrl && <a className="ul" href={p.codeUrl} target="_blank" rel="noopener">Source code <Arrow dir="up-right" /></a>}
           </div>
         </div>
       </div>
@@ -81,7 +82,7 @@ export default async function ProjectPage({ params }: Props) {
       {next && (
         <Link className="next" href={`/work/${next.slug}`}>
           <span><span className="k">Next project</span><b>{next.shortTitle || next.title}</b></span>
-          <span className="ar">→</span>
+          <span className="ar"><Arrow /></span>
         </Link>
       )}
     </>

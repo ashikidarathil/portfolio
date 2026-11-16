@@ -5,6 +5,7 @@ import { marked } from "marked";
 import { Cover } from "@/components/site/Cover";
 import { getPostBySlug, getPosts } from "@/lib/data";
 import { monthYear, readMinutes } from "@/lib/utils";
+import { Arrow } from "@/components/Arrow";
 
 export const revalidate = 3600;
 
@@ -33,7 +34,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <>
       <section className="title-block">
-        <Link className="back" href="/blog">← All posts</Link>
+        <Link className="back" href="/blog"><Arrow dir="left" /> All posts</Link>
         <h1 className="case-title post">{p.title}</h1>
       </section>
       {p.coverImage && <Cover src={p.coverImage} label={p.title} className="case-cover" sizes="100vw" priority />}

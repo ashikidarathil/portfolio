@@ -4,6 +4,7 @@ import { startTransition, useActionState, useEffect } from "react";
 import { useModal } from "@/components/admin/modal";
 import { login } from "../auth-actions";
 import type { FormState } from "@/lib/types";
+import { Arrow } from "@/components/Arrow";
 
 export default function LoginPage() {
   const [state, action, pending] = useActionState<FormState, FormData>(login, {});
@@ -29,7 +30,7 @@ export default function LoginPage() {
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required autoComplete="current-password" />
         </div>
-        <button className="abtn" type="submit" disabled={pending}>{pending ? "Logging in…" : "Log in →"}</button>
+        <button className="abtn" type="submit" disabled={pending}>{pending ? "Logging in…" : <>Log in <Arrow /></>}</button>
       </form>
     </div>
   );

@@ -5,6 +5,7 @@ import { ProjectForm } from "@/components/admin/ProjectForm";
 import { ConfirmButton } from "@/components/admin/ui";
 import { getProjectById } from "@/lib/data";
 import { deleteProject } from "../../../actions";
+import { Arrow } from "@/components/Arrow";
 
 export default async function EditProject({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -15,8 +16,8 @@ export default async function EditProject({ params }: { params: Promise<{ id: st
       <header className="ahead">
         <div><h1>Edit project</h1><p>{p.title}</p></div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link className="abtn ghost" href="/admin/projects">← All projects</Link>
-          {p.published && <Link className="abtn ghost" href={`/work/${p.slug}`} target="_blank">View live ↗</Link>}
+          <Link className="abtn ghost" href="/admin/projects"><Arrow dir="left" /> All projects</Link>
+          {p.published && <Link className="abtn ghost" href={`/work/${p.slug}`} target="_blank">View live <Arrow dir="up-right" /></Link>}
           <form action={deleteProject}>
             <input type="hidden" name="id" value={p._id} />
             <ConfirmButton className="abtn danger" title="Delete this project?" message={`"${p.title}" will be removed from your site for good.`}>Delete</ConfirmButton>

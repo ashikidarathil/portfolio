@@ -4,6 +4,7 @@ import { CopyEmail, PostList } from "@/components/site/client";
 import { getExperience, getPosts, getProfile, getProjects, getSkillGroups } from "@/lib/data";
 import { nameLines } from "@/lib/utils";
 import { postRow } from "@/lib/view";
+import { Arrow } from "@/components/Arrow";
 
 export const revalidate = 3600;
 
@@ -33,7 +34,7 @@ export default async function Home() {
           </dl>
           <p className="lead">{p.lead}</p>
           <div className="cta">
-            <Link className="btn" href="/work">See the work →</Link>
+            <Link className="btn" href="/work">See the work <Arrow /></Link>
             <a className="ul" href="#contact">Get in touch</a>
             {p.resumeUrl && <a className="ul" href={p.resumeUrl} target="_blank" rel="noopener">Download resume</a>}
           </div>
@@ -69,7 +70,7 @@ export default async function Home() {
         <div>
           <div className="sec-head">
             <h2 className="h2">{projects.length === 1 ? "One project, live." : `${projects.length} projects, all live.`}</h2>
-            <Link className="ul" href="/work">All projects →</Link>
+            <Link className="ul" href="/work">All projects <Arrow /></Link>
           </div>
           {projects.length ? (
             <ul className="list">
@@ -79,7 +80,7 @@ export default async function Home() {
                     <span className="yr">{x.year}</span>
                     <span className="tt">{x.title}</span>
                     <span className="st">{x.stack.slice(0, 4).join(" · ")}</span>
-                    <span className="ar">↗</span>
+                    <span className="ar"><Arrow dir="up-right" /></span>
                   </Link>
                 </li>
               ))}
@@ -128,7 +129,7 @@ export default async function Home() {
           <div>
             <div className="sec-head">
               <h2 className="h2">Notes from building things.</h2>
-              <Link className="ul" href="/blog">All posts →</Link>
+              <Link className="ul" href="/blog">All posts <Arrow /></Link>
             </div>
             <PostList posts={posts.slice(0, 3).map(postRow)} />
           </div>

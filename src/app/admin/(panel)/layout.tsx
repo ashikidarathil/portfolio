@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/site/client";
 import { requireAdmin } from "@/lib/auth";
 import { getCounts } from "@/lib/data";
 import { logout } from "../auth-actions";
+import { Arrow } from "@/components/Arrow";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +21,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
           <Link className="brand" href="/admin">Admin<b>.</b></Link>
           <SideNav unread={unread} />
           <div className="bottom">
-            <Link href="/" target="_blank">View site ↗</Link>
+            <Link href="/" target="_blank">View site <Arrow dir="up-right" /></Link>
             <ThemeToggle className="mode" />
             <form action={logout}>
               <ConfirmButton className="link" title="Log out?" message="You'll need your email and password to get back in." confirmLabel="Log out" danger={false}>

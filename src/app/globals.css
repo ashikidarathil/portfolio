@@ -270,3 +270,12 @@ img { max-width: 100%; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* SVG arrows (components/Arrow.tsx) sit on the text line like a glyph */
+.arrow { display: inline-block; flex: none; vertical-align: -0.125em; }
+.list .ar { display: flex; justify-content: flex-end; }
+.list .ar .arrow { width: 22px; height: 22px; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.list a:hover .ar .arrow { transform: translate(3px, -3px); }
+.next .ar { display: flex; }
+.ul .arrow { transition: transform 0.2s; }
+.ul:hover .arrow { transform: translateX(3px); }

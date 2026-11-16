@@ -3,6 +3,7 @@
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { sendMessage } from "@/app/actions";
 import type { FormState } from "@/lib/types";
+import { Arrow } from "@/components/Arrow";
 
 type Field = "name" | "email" | "message";
 type Errors = Partial<Record<Field, string>>;
@@ -119,7 +120,7 @@ export function ContactForm() {
       </div>
       <div className="form-foot">
         <button className="btn" type="submit" disabled={pending}>
-          {pending ? "Sending…" : "Send message →"}
+          {pending ? "Sending…" : <>Send message <Arrow /></>}
         </button>
         <span className={`form-note${state.error ? " err" : ""}`} role="status">
           {state.error ?? state.ok ?? "I usually reply within a day or two."}
