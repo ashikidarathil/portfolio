@@ -56,7 +56,7 @@ const projects = [
       "Dockerised for a consistent setup",
     ],
     liveUrl: "https://salonbook.online/",
-    codeUrl: "https://github.com/ashikidarathil/salon-booking-backend",
+    codeUrl: "https://github.com/ashikidarathil/salonbook",
     order: 0,
   },
   {
